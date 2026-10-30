@@ -1,0 +1,7 @@
+node_modules/
+.env
+# Recorded live runs contain Qloo response data, which must not be published.
+runs/*-live.json
+
+# Private planning notes (rival analysis); not for the public repo.
+BRAINSTORM.md

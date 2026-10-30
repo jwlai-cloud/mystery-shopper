@@ -1,0 +1,8 @@
+{
+  "name": "mystery-shopper",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": { "start": "node --env-file-if-exists=.env server.mjs", "record": "node --env-file-if-exists=.env server.mjs --record", "probe": "node --env-file-if-exists=.env probe.mjs", "test": "node test.mjs" }
+}
