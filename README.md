@@ -54,6 +54,10 @@ Without keys, everything runs against a small mock world. For live runs, copy `.
 | `AUDITOR_MODEL` | Extracts recommendations and writes the patch |
 | `LIVE_DAILY_CAP` | Live audits allowed per day (one at a time) |
 
+## Deploy
+
+Any container host with Node 22 (Render, Fly, Railway). Start command `npm start`; the server reads `PORT`. Set the keys as server-side environment variables only. Recorded live runs (`runs/*-live.json`) contain Qloo data, so they are not in this repository: upload them as private files on the host (for example Render secret files, which appear under `/etc/secrets`) and set `RUNS_EXTRA_DIR=/etc/secrets`. Keep `LIVE_DAILY_CAP` low and set a credit limit on the LLM key.
+
 ## Layout
 
 | File | What |
