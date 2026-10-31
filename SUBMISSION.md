@@ -1,6 +1,6 @@
 # Mystery Shopper — Devpost text
 
-**Live demo:** <CLOUD_RUN_URL> (no login; opens on a recorded real audit, "Run live" runs a fresh one)
+**Live demo:** https://mystery-shopper-320877670799.us-central1.run.app (no login; opens on a recorded real audit, "Run live" runs a fresh one)
 **Code:** https://github.com/jwlai-cloud/mystery-shopper (MIT)
 
 ## Inspiration

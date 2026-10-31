@@ -4,6 +4,8 @@
 
 Built for the Qloo Agentic Hackathon 2026. MIT licence.
 
+**Live demo:** https://mystery-shopper-320877670799.us-central1.run.app (no login; opens on a recorded real audit, "Run live" runs a fresh one)
+
 ## The problem
 
 Travel and booking apps are shipping AI concierges. Nobody checks whether the recommendations fit the people asking. In practice the assistant:
