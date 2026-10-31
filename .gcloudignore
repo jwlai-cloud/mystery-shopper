@@ -1,0 +1,7 @@
+# Cloud Run source upload. Recorded live runs ARE uploaded (they go into the private image, not git).
+.git
+.gitignore
+.env
+.claude
+BRAINSTORM.md
+node_modules/
