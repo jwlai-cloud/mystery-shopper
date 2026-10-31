@@ -38,7 +38,7 @@ let liveBusy = false, liveDay = '', liveCount = 0;
 const LIVE_CAP = +(process.env.LIVE_DAILY_CAP || 40);
 
 const send = (res, code, body, type = 'application/json') =>
-  res.writeHead(code, { 'Content-Type': type }).end(typeof body === 'string' ? body : JSON.stringify(body));
+  res.writeHead(code, { 'Content-Type': type, 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'DENY', 'Referrer-Policy': 'no-referrer' }).end(typeof body === 'string' ? body : JSON.stringify(body));
 
 createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
