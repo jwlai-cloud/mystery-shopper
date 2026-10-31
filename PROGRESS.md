@@ -2,18 +2,15 @@
 
 Deadline: **Oct 30, 23:45 ET**. Idea and decisions: private BRAINSTORM.md (gitignored).
 
-## Done (10-29)
-- Engine: probe → extract → grade (phantom / elsewhere / mainstream / affinity) → adaptive worst-segment probe → prompt-only repair → Qloo-tool repair → metrics.
-- Qloo client (live REST, param names checked against the official harness 0.1.26) plus a mock world.
-- OpenAI-compatible LLM client with tool calls, plus a mock.
-- Server: recorded-run replay, capped live audit over SSE, health endpoint.
-- UI: stage stepper, scorecard, segment cards with verdict stamps, agent log.
-- `npm test` passes offline (baseline 92% fail → prompt fix 33% → Qloo tool 0% on mocks).
+## Done
+- Engine: probe → extract → grade → adaptive worst-segment probe → prompt-only repair → Qloo-tool repair → metrics.
+- Grading fitted to real Qloo shapes (10-31): `properties.geocode` city check, city-relative mainstream (city's top-25 by popularity; artists ≥ 0.995), strict name match, unverified vs elsewhere.
+- 5 segments with seeds that resolve in Qloo (Lagos, Austin, Osaka, Mexico City, Lisbon).
+- Cheap models: target `openai/gpt-6-luna`, auditor `deepseek/deepseek-v4.1-flash`.
+- Recorded live audit 2026-10-31T02-46-20Z: failures 22% → 23% (prompt fix) → 19% (Qloo tool), affinity 0.913 → 0.924 → 0.932.
+- Deployed on Cloud Run (personal project `agent-era`, us-central1, max 1 instance): https://mystery-shopper-320877670799.us-central1.run.app. Recorded live runs ship in the private image, never in git.
+- First-visit guided tour, security headers, repo public with MIT licence and demo link in About.
 
 ## Next
-1. **Qloo key arrives** → probe live: `/search` with city for places, `geocode` shape, `popularity` scale, `filter.location.query` behaviour. Fix grading against real shapes.
-2. **LLM key** (OpenRouter; put it in .env, then `npm run probe`) → first real audit, `npm run record`.
-3. Replace the mock seeds with seeds that resolve well in Qloo. Consider 4–6 segments.
-4. Deploy on a container host (Render/Fly/Railway). Recorded live runs ship from a private source, not the public repo.
-5. Optional: swap the stage-2 tool for the official `qloo mcp` server.
-6. Devpost text, public repo, licence in About.
+1. Optional: redesign (three directions first), demo video with Cloud TTS voice.
+2. Point it at a team's own assistant endpoint; run it in CI.
