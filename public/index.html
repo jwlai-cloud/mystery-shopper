@@ -75,6 +75,7 @@ pre{white-space:pre-wrap;font:12px 'JetBrains Mono',monospace;background:var(--b
   <h1>Mystery <em>Shopper</em></h1>
   <p class="lede">Your travel app's AI concierge recommends the same famous places to everyone, and sometimes places that don't exist. Mystery Shopper sends it test shoppers built from Qloo audience segments, checks every recommendation against Qloo's taste graph, digs into the worst segment, then repairs the assistant and re-tests it.</p>
 
+  <p class="lede"><b>Two ways to try it.</b> The page opens by replaying a real recorded audit (5 segments, 3 stages, gpt-6-luna as the concierge, every verdict from live Qloo calls). Or press <b>Run live</b> for a fresh, smaller audit against the real APIs right now.</p>
   <div class="bar">
     <select id="runs" aria-label="Recorded audits"></select>
     <button class="primary" id="replay">▶ Replay recorded audit</button>
@@ -106,7 +107,7 @@ pre{white-space:pre-wrap;font:12px 'JetBrains Mono',monospace;background:var(--b
   </div>
 
   <div class="limits">
-    <b>What this does and doesn't establish.</b> Segments are aggregate audiences (a city, an age band, two taste seeds), not people. Qloo results describe what groups tend to like, not what any one traveller will do. UNVERIFIED means Qloo's catalogue has no match in that city. On real data this is often a gap in Qloo's coverage of a real local place, so read it as 'can't be checked', not 'doesn't exist'. The headline checks (phantom, elsewhere, mainstream) are factual lookups. Qloo affinity is shown separately and labelled, because the stage-3 fix itself uses Qloo. The stage-2 fix uses no Qloo at all, so its lift can't come from grading with the fix.
+    <b>What this does and doesn't establish.</b> Segments are aggregate audiences (a city, an age band, two taste seeds), not people. Qloo results describe what groups tend to like, not what any one traveller will do. UNVERIFIED means Qloo's catalogue has no match in that city. On real data this is often a gap in Qloo's coverage of a real local place, so read it as 'can't be checked', not 'doesn't exist'. The headline checks (unverified, elsewhere, mainstream) are factual lookups. Qloo affinity is shown separately and labelled, because the stage-3 fix itself uses Qloo. The stage-2 fix uses no Qloo at all, so its lift can't come from grading with the fix.
   </div>
 </div>
 <script>
