@@ -10,7 +10,7 @@ Travel and booking apps are shipping AI concierges. Nobody checks whether the re
 
 - recommends places that don't exist (**phantoms**),
 - recommends places in the wrong city (**elsewhere**),
-- gives everyone the same global top-5% names, whatever their city, age or taste (**mainstream collapse**).
+- gives everyone the same famous names from the city's tourist list, whatever their age or taste (**mainstream collapse**).
 
 The buyer is the team that owns an AI concierge at a travel or booking app. Today they have no way to catch these failures by segment.
 
@@ -20,9 +20,9 @@ The buyer is the team that owns an AI concierge at a travel or booking app. Toda
 2. **Grade.** An auditor LLM extracts every named recommendation. Each one is checked against Qloo:
    - `GET /search` (with the city for places): does the entity exist? → PHANTOM
    - the resolved entity's address/geocode: is the place in the shopper's city? → ELSEWHERE
-   - the entity's Qloo `popularity` percentile ≥ 0.95 → MAINSTREAM
+   - popularity → MAINSTREAM. Qloo's `popularity` is a percentile over its whole catalogue, so almost every real place in a big city scores above 0.98 and a fixed cut is meaningless. A place counts as mainstream when it is at least as popular as the city's 25th most popular place in Qloo (`/v2/insights` with `filter.location.query`, no signals), i.e. it is on the city's tourist list. An artist counts as mainstream at percentile ≥ 0.995 (Taylor Swift, Ed Sheeran, BTS and Willie Nelson are in; Fela Kuti and Burna Boy are not). Artists the shopper named themselves are not graded.
    - `GET /v2/insights` with `filter.results.entities` set to the recommendations, plus `signal.interests.entities` (the seeds), `signal.location.query` and `signal.demographics.age` → aggregate Qloo affinity, shown separately
-3. **Dig in (agentic step).** The agent finds the segment with the highest failure rate, asks Qloo which artists that audience likes below the mainstream cut (`filter.popularity.max=0.9`), and writes a new probe with those seeds.
+3. **Dig in (agentic step).** The agent finds the segment with the highest failure rate, asks Qloo which lesser-known artists that audience likes (`signal.location.query`, `signal.demographics.age`, the segment's seeds, `filter.popularity.max=0.9`), and writes a new probe with those seeds.
 4. **Repair, stage 1 (no Qloo).** The auditor reads the failures and rewrites the target's system prompt. Every probe runs again.
 5. **Repair, stage 2 (Qloo tool).** The patched assistant gets a `qloo_local_taste` tool backed by `/v2/insights` (place results limited to the city with `filter.location.query`). Every probe runs again.
 6. **Report.** A scorecard with before/after for each stage, every recommendation stamped with its verdict and Qloo evidence, and an agent log.

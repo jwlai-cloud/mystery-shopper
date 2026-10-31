@@ -90,9 +90,9 @@ pre{white-space:pre-wrap;font:12px 'JetBrains Mono',monospace;background:var(--b
         <h2>Scorecard</h2>
         <table id="score"></table>
         <div class="legend">
-          <span class="phantom">■ PHANTOM: Qloo has no entity by that name</span>
-          <span class="elsewhere">■ ELSEWHERE: place is not in the shopper's city</span>
-          <span class="mainstream">■ MAINSTREAM: global top 5% by Qloo popularity</span>
+          <span class="phantom">■ UNVERIFIED: Qloo has no entity by that name in the shopper's city</span>
+          <span class="elsewhere">■ ELSEWHERE: assistant sent the shopper to another city</span>
+          <span class="mainstream">■ MAINSTREAM: on the city's top-25 list in Qloo, or a global top-0.5% artist</span>
           <span class="ok">■ OK</span>
         </div>
       </div>
@@ -106,7 +106,7 @@ pre{white-space:pre-wrap;font:12px 'JetBrains Mono',monospace;background:var(--b
   </div>
 
   <div class="limits">
-    <b>What this does and doesn't establish.</b> Segments are aggregate audiences (a city, an age band, two taste seeds), not people. Qloo results describe what groups tend to like, not what any one traveller will do. PHANTOM means Qloo's catalogue has no match, which is strong evidence but not proof that a place doesn't exist. The headline checks (phantom, elsewhere, mainstream) are factual lookups. Qloo affinity is shown separately and labelled, because the stage-3 fix itself uses Qloo. The stage-2 fix uses no Qloo at all, so its lift can't come from grading with the fix.
+    <b>What this does and doesn't establish.</b> Segments are aggregate audiences (a city, an age band, two taste seeds), not people. Qloo results describe what groups tend to like, not what any one traveller will do. UNVERIFIED means Qloo's catalogue has no match in that city. On real data this is often a gap in Qloo's coverage of a real local place, so read it as 'can't be checked', not 'doesn't exist'. The headline checks (phantom, elsewhere, mainstream) are factual lookups. Qloo affinity is shown separately and labelled, because the stage-3 fix itself uses Qloo. The stage-2 fix uses no Qloo at all, so its lift can't come from grading with the fix.
   </div>
 </div>
 <script>
@@ -134,7 +134,7 @@ function renderSteps() {
 const pct = x => x == null ? '–' : Math.round(x * 100) + '%';
 function renderScore() {
   const cols = [['baseline', 'Baseline', 'var(--b0)'], ['prompt-fix', 'Prompt fix', 'var(--b1)'], ['qloo-tool', '+ Qloo tool', 'var(--b2)']];
-  const rows = [['phantom', 'Phantoms'], ['elsewhere', 'Wrong city'], ['mainstream', 'Global mainstream'], ['failRate', 'Any failure'], ['affinity', 'Qloo affinity (aggregate, higher = better)']];
+  const rows = [['phantom', 'Unverified'], ['elsewhere', 'Wrong city'], ['mainstream', 'Global mainstream'], ['failRate', 'Any failure'], ['affinity', 'Qloo affinity (aggregate, higher = better)']];
   $('score').innerHTML = `<tr><th>Check</th>${cols.map(c => `<th>${c[1]}</th>`).join('')}</tr>` + rows.map(([k, label]) =>
     `<tr><td>${label}</td>${cols.map(([s, , color]) => {
       const m = S.metrics[s]; const v = m?.[k];
@@ -157,7 +157,7 @@ function renderSegs() {
       ${sg.adaptive ? '<div class="pill mainstream">added by the agent</div>' : ''}
       <h3>${esc(sg.city)}</h3>
       <div class="who">${esc(sg.ageText)} · into ${sg.seeds.map(esc).join(', ')}</div>
-      <div class="stamps">${b.recs.map(r => `<span class="stamp ${r.verdict}" title="${esc(r.why)}${r.popularity != null ? ' · popularity ' + (r.popularity * 100).toFixed(1) : ''}${r.affinity != null ? ' · affinity ' + r.affinity.toFixed(2) : ''}">${esc(r.name)}<em>${r.verdict === 'ok' ? '✓' : r.verdict.toUpperCase()}</em></span>`).join('')}</div>
+      <div class="stamps">${b.recs.map(r => `<span class="stamp ${r.verdict}" title="${esc(r.why)}${r.popularity != null ? ' · popularity ' + (r.popularity * 100).toFixed(1) : ''}${r.affinity != null ? ' · affinity ' + r.affinity.toFixed(2) : ''}">${esc(r.name)}<em>${r.verdict === 'ok' ? '✓' : r.verdict === 'phantom' ? 'UNVERIFIED' : r.verdict.toUpperCase()}</em></span>`).join('')}</div>
       <div class="chat">${b.chat.map(c => `<p class="${c.k}">${esc(c.text)}</p>`).join('')}</div>
     </div>`;
   }).join('');
